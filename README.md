@@ -1,4 +1,4 @@
-"# rocket-daily-standup" 
+# rocket-daily-standup
 
 ## Project setup
 1. Run this command
