@@ -1,3 +1,4 @@
+
 # rocket-daily-standup
 
 ## Project setup
@@ -13,7 +14,7 @@ npm install
 7. ROCKETCHAT_USER for rocketchat username login
 8. ROCKETCHAT_PASSWORD for rocketchat password login
 
-### Compiles and hot-reloads for development
+### Compiles for development
 ```
 npm run watch
 ```
@@ -22,8 +23,13 @@ or you can use
 npm run debug
 ```
 
-### Compiles and minifies for production
+### Compiles for production
 ```
 npm run start
 ```
 
+
+### Usefull links
+- [bBot API](https://amazebot.github.io/bbot/index.html)
+- [Rocket.Chat SDK](https://github.com/RocketChat/Rocket.Chat.js.SDK)
+- [Rocket.Chat API](https://rocket.chat/docs/developer-guides/rest-api/)
