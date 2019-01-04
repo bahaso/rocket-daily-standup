@@ -1,27 +1,22 @@
 {
-  "name": "bahaso-bot",
-  "version": "1.0.0",
-  "description": "Bahaso Rocket.chat bot using bbot and rocket.chat SDK",
-  "main": "index.js",
-  "repository": "git@github.com:bahaso/rocket-daily-standup.git",
-  "author": "Lscheherazade<levialexander9@live.com>",
-  "contributors": [],
-  "license": "MIT",
-  "private": true,
-  "engines": {
-    "node": "> 8.0.0",
-    "npm": "> 5.0.0"
+  "name": "my-glitch-app",
+  "version": "0.0.1",
+  "description": "What am I about?",
+  "scripts": {
+    "start": "node server.js"
   },
   "dependencies": {
-    "bbot": "1.1.0",
-    "moment": "^2.22.2"
+    "@rocket.chat/sdk": "^0.1.0"
   },
-  "devDependencies": {
-    "nodemon": "^1.18.3"
+  "engines": {
+    "node": "9.x"
   },
-  "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
-    "debug": "nodemon --inspect index.js"
-  }
+  "repository": {
+    "url": "https://glitch.com/edit/#!/my-glitch-app"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch"
+  ]
 }
