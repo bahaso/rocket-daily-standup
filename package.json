@@ -1,18 +1,20 @@
 {
-  "name": "my-glitch-app",
+  "name": "bahaso-rocket-chat",
   "version": "0.0.1",
-  "description": "What am I about?",
+  "description": "Chatbot for Bahaso's RocketChat",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "dependencies": {
-    "@rocket.chat/sdk": "^0.1.0"
+    "@rocket.chat/sdk": "^0.2.9",
+    "dotenv": "^6.2.0",
+    "moment": "^2.23.0"
   },
   "engines": {
     "node": "9.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/my-glitch-app"
+    "url": "https://github.com/bahaso/rocket-daily-standup.git"
   },
   "license": "MIT",
   "keywords": [

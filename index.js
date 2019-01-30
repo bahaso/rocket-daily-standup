@@ -1,14 +1,16 @@
+require('dotenv').config();
 const rocket = require('@rocket.chat/sdk');
 const respmap  = require('./reply');
 const moment = require('moment');
+// const env = require('./env')
 
 // customize the following with your server and BOT account information
-const HOST = 'chat.bahaso.com';
-const USER = 'BahasoBot';
-const PASS = 'bot123';
-const BOTNAME = 'bot';  // name  bot response to
-const SSL = true;  // server uses https ?
-const ROOMS = [ 'test','test'];
+const HOST = process.env.URL;
+const USER = process.env.USER;
+const PASS = process.env.PASS;
+const BOTNAME = process.env.BOT;  // name  bot response to
+const SSL = process.env.SSL;  // server uses https ?
+const ROOMS = [process.env.ROOMS];
 const TIME_DIALOG = '16:25:00'
 const TIME_PUBLISH= '16:25:30'
 let time = {
@@ -115,9 +117,6 @@ const processMessages = async(err, message, messageOptions) => {
 }
 }
     
-  
-
-
 function getChannelMemberList() {
     rocket.api.get('channels.members', {
         roomId: channelId
