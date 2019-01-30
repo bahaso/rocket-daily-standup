@@ -6,14 +6,15 @@ const moment = require('moment');
 // const env = require('./env')
 
 // customize the following with your server and BOT account information
-const HOST = process.env.URL;
-const USER = process.env.USER;
-const PASS = process.env.PASS;
-const BOTNAME = process.env.BOT;  // name  bot response to
-const SSL = process.env.SSL;  // server uses https ?
-const ROOMS = [process.env.ROOMS];
-const TIME_DIALOG = process.env.TIME_DIALOG
-const TIME_PUBLISH= process.env.TIME_PUBLISH
+const HOST = process.env.BOT_URL;
+// const USER = process.env.BOT_USER;
+const USER = process.env.BOT_USER;
+const PASS = process.env.BOT_PASS;
+const BOTNAME = process.env.BOT_NAME;  // name  bot response to
+const SSL = process.env.BOT_SSL;  // server uses https ?
+const ROOMS = [process.env.BOT_ROOMS];
+const TIME_DIALOG = process.env.BOT_TIME_DIALOG
+const TIME_PUBLISH= process.env.BOT_TIME_PUBLISH
 let time = {
     dialog: TIME_DIALOG,
     publish:TIME_PUBLISH
@@ -28,6 +29,11 @@ var myuserid;
 // and other production situations 
 
 const runbot = async () => {
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
+    console.log(USER, PASS)
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
+    console.log(process.env.BOT_USER, process.env.BOT_PASS)
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
     const conn = await rocket.driver.connect( { host: HOST, useSsl: SSL})
     myuserid = await rocket.driver.login({username: USER, password: PASS});
     const roomsJoined = await rocket.driver.joinRooms(ROOMS);
