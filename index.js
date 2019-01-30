@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const rocket = require('@rocket.chat/sdk');
 const respmap  = require('./reply');
 const moment = require('moment');
@@ -11,8 +12,8 @@ const PASS = process.env.PASS;
 const BOTNAME = process.env.BOT;  // name  bot response to
 const SSL = process.env.SSL;  // server uses https ?
 const ROOMS = [process.env.ROOMS];
-const TIME_DIALOG = '16:25:00'
-const TIME_PUBLISH= '16:25:30'
+const TIME_DIALOG = process.env.TIME_DIALOG
+const TIME_PUBLISH= process.env.TIME_PUBLISH
 let time = {
     dialog: TIME_DIALOG,
     publish:TIME_PUBLISH

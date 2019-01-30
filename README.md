@@ -6,13 +6,13 @@
 ```
 npm install
 ```
-2. Change BOT_NAME, BOT_ALIAS for bot identifiaction
-3. Change BOT_CHANNEL_NAME for channel name where bot will post user's stand-up
-4. BOT_TIME_DIALOG for when bot will asking user's. (Example : '09:00:00)
-5. BOT_TIME_PUBLISH for when bot will post user's stand-up to channel BOT_CHANNEL_NAME. (Example : '10:00:00)
-6. change ROCKETCHAT_URL for bot server. (Example: https://chat.bahaso.com)
-7. ROCKETCHAT_USER for rocketchat username login
-8. ROCKETCHAT_PASSWORD for rocketchat password login
+2. Change BOT for bot identifiaction
+3. Change ROOMS for rooms name where bot will post user's stand-up
+4. TIME_DIALOG for when bot will asking user's. (Example : '09:00:00)
+5. TIME_PUBLISH for when bot will post user's stand-up to channel BOT_CHANNEL_NAME. (Example : '10:00:00)
+6. change URL for bot server. (Example: https://chat.bahaso.com)
+7. USER for rocketchat username login
+8. PASS for rocketchat password login
 
 ### Compiles for development
 ```
