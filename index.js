@@ -6,15 +6,14 @@ const moment = require('moment');
 // const env = require('./env')
 
 // customize the following with your server and BOT account information
-const HOST = process.env.BOT_URL;
-// const USER = process.env.BOT_USER;
-const USER = process.env.BOT_USER;
-const PASS = process.env.BOT_PASS;
+const HOST = process.env.ROCKETCHAT_URL;
+const USER = process.env.ROCKETCHAT_USER;
+const PASS = process.env.ROCKETCHAT_PASSWORD;
 const BOTNAME = process.env.BOT_NAME;  // name  bot response to
-const SSL = process.env.BOT_SSL;  // server uses https ?
-const ROOMS = [process.env.BOT_ROOMS];
-const TIME_DIALOG = process.env.BOT_TIME_DIALOG
-const TIME_PUBLISH= process.env.BOT_TIME_PUBLISH
+const SSL = process.env.ROCKETCHAT_USE_SSL;  // server uses https ?
+const ROOMS = [process.env.ROCKETCHAT_ROOM];
+const TIME_DIALOG = process.env.TIME_DIALOG
+const TIME_PUBLISH= process.env.TIME_PUBLISH
 let time = {
     dialog: TIME_DIALOG,
     publish:TIME_PUBLISH
