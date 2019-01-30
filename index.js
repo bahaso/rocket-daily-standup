@@ -29,11 +29,6 @@ var myuserid;
 // and other production situations 
 
 const runbot = async () => {
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
-    console.log(USER, PASS)
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
-    console.log(process.env.BOT_USER, process.env.BOT_PASS)
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~')
     const conn = await rocket.driver.connect( { host: HOST, useSsl: SSL})
     myuserid = await rocket.driver.login({username: USER, password: PASS});
     const roomsJoined = await rocket.driver.joinRooms(ROOMS);
