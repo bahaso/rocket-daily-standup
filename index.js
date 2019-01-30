@@ -12,11 +12,9 @@ const PASS = process.env.ROCKETCHAT_PASSWORD;
 const BOTNAME = process.env.BOT_NAME;  // name  bot response to
 const SSL = process.env.ROCKETCHAT_USE_SSL;  // server uses https ?
 const ROOMS = [process.env.ROCKETCHAT_ROOM];
-const TIME_DIALOG = process.env.TIME_DIALOG
-const TIME_PUBLISH= process.env.TIME_PUBLISH
 let time = {
-    dialog: TIME_DIALOG,
-    publish:TIME_PUBLISH
+    dialog: process.env.BOT_TIME_DIALOG,
+    publish: process.env.BOT_TIME_PUBLISH
 }
 let channelId='';
 let users = []
