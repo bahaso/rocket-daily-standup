@@ -1,119 +1,107 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const rocket = require('@rocket.chat/sdk');
-const respmap  = require('./reply');
-const moment = require('moment');
-// const env = require('./env')
+const rocket = require('@rocket.chat/sdk')
+const respmap  = require('./reply')
+const moment = require('moment')
 
-// customize the following with your server and BOT account information
-const HOST = process.env.ROCKETCHAT_URL;
-const USER = process.env.ROCKETCHAT_USER;
-const PASS = process.env.ROCKETCHAT_PASSWORD;
-const BOTNAME = process.env.BOT_NAME;  // name  bot response to
-const SSL = process.env.ROCKETCHAT_USE_SSL;  // server uses https ?
-const ROOMS = [process.env.ROCKETCHAT_ROOM];
+const HOST = process.env.ROCKETCHAT_URL
+const USER = process.env.ROCKETCHAT_USER
+const PASS = process.env.ROCKETCHAT_PASSWORD
+const BOTNAME = process.env.BOT_NAME
+const SSL = process.env.ROCKETCHAT_USE_SSL
+const ROOMS = [process.env.ROCKETCHAT_ROOM]
 let time = {
     dialog: process.env.BOT_TIME_DIALOG,
     publish: process.env.BOT_TIME_PUBLISH
 }
-let channelId='';
+let channelId=''
 let users = []
 let submited = []
 let indexCount = 0
 
-var myuserid;
-// this simple bot does not handle errors, different messsage types, server resets 
-// and other production situations 
+let myuserid
 
 const runbot = async () => {
     const conn = await rocket.driver.connect( { host: HOST, useSsl: SSL})
-    myuserid = await rocket.driver.login({username: USER, password: PASS});
-    const roomsJoined = await rocket.driver.joinRooms(ROOMS);
-    console.log('joined rooms');
+    myuserid = await rocket.driver.login({username: USER, password: PASS})
+    const roomsJoined = await rocket.driver.joinRooms(ROOMS)
 
-    // set up subscriptions - rooms we are interested in listening to
-    const subscribed = await rocket.driver.subscribeToMessages();
-    console.log('subscribed');
-
-    // connect the processMessages callback
-    const msgloop = await rocket.driver.reactToMessages( processMessages );
-    console.log('connected and waiting for messages');
-
-    // when a message is created in one of the ROOMS, we 
-    // receive it in the processMesssages callback
-
-    // greets from the first room in ROOMS 
-    const sent = await rocket.driver.sendToRoom( BOTNAME + ' is listening ...',ROOMS[0]);
-    console.log('Greeting message sent');
+    const subscribed = await rocket.driver.subscribeToMessages()
+    const msgloop = await rocket.driver.reactToMessages( processMessages )
 }
 
-// callback for incoming messages filter and processing
 const processMessages = async(err, message, messageOptions) => {
     
   if (!err) {
-    // filter our own message
-    if (message.u._id === myuserid) return;
-    // can filter further based on message.rid
-    const roomname = await rocket.driver.getDirectMessageRoomId(message.u.username);
-    if (message.msg.toLowerCase()) {
-      let response
-     // if 
-      let inpmsg = message.msg.toLowerCase()
-      if (indexCount== 0) {
-        submited.push({
-            user: message.u,
-            message1: inpmsg,
-            message2: '',
-            message3: '',
-        })
-        response = respmap.yesterday
-        indexCount=1
-      }
-      else if(indexCount == 1){
-        let indexSubmit = findInSubmit(message.u.username)
-        submited[indexSubmit].message2 = inpmsg
-        response = respmap.today
-          indexCount=2
-      }
-      else if (indexCount == 2){
-            let indexSubmit = findInSubmit(message.u.username)
-            submited[indexSubmit].message3 = inpmsg
-            response = respmap.blocking
-          if (moment().format('HH:mm:ss') > time.publish) {
-            let submit = submited[indexSubmit]
-    
-            rocket.driver.sendMessage({
-                rid: channelId,
-                msg: 'Hey @here, @'+submit.user.name+' was submited a stand-up\n'+
-                     '**1. What did you do since yesterday?**\n'+
-                     '> '+submit.message1+'\n'+
-                     '** ** \n'+
-                     '**2. What will you do today?**\n'+
-                     '> '+submit.message2+'\n'+
-                     '** ** \n'+
-                     '**3. Anything is blocking your progress?**\n'+
-                     '> '+submit.message3+'\n'
+    if (message.u._id === myuserid) return
+    const roomname = await rocket.driver.getDirectMessageRoomId(message.u.username)
+
+    if (message.msg.toLowerCase() && message.rid == roomname) {
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        console.log('get dm from '+message.u.username)
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        
+        let response
+        let inpmsg = message.msg.toLowerCase()
+        
+        if (indexCount== 0) {
+            submited.push({
+                user: message.u,
+                message1: inpmsg,
+                message2: '',
+                message3: '',
             })
-            .then(response => {
-                submited.splice(indexSubmit, 1)
-                b.respond('Thank you 👋')
-            })
-            .catch(error => {
-                b.respond('Alice ngantuk, nanti lagi ya~')
-            })
+            response = respmap.yesterday
+            indexCount=1
         }
-        indexCount = 0
-    }
-    else{
-        response = message.u.username + 
-        ', how can ' + BOTNAME + ' help you with ' +
-        message.msg.substr(BOTNAME.length + 1)
-      }
-      const sentmsg = await rocket.driver.sendToRoom(response, roomname);
-      
-    }
+        else if(indexCount == 1){
+            let indexSubmit = findInSubmit(message.u.username)
+            submited[indexSubmit].message2 = inpmsg
+            response = respmap.today
+            indexCount=2
+        }
+        else if (indexCount == 2){
+                let indexSubmit = findInSubmit(message.u.username)
+                submited[indexSubmit].message3 = inpmsg
+                response = respmap.blocking
+            if (moment().format('HH:mm:ss') > time.publish) {
+                let submit = submited[indexSubmit]
+        
+                rocket.driver.sendMessage({
+                    rid: channelId,
+                    msg: 'Hey @here, @'+submit.user.name+' was submited a stand-up\n'+
+                        '**1. What did you do since yesterday?**\n'+
+                        '> '+submit.message1+'\n'+
+                        '** ** \n'+
+                        '**2. What will you do today?**\n'+
+                        '> '+submit.message2+'\n'+
+                        '** ** \n'+
+                        '**3. Anything is blocking your progress?**\n'+
+                        '> '+submit.message3+'\n'
+                })
+                .then(response => {
+                    submited.splice(indexSubmit, 1)
+                    b.respond('Thank you 👋')
+                })
+                .catch(error => {
+                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+                    console.log('Error send message to channel')
+                    console.log(error)
+                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+                })
+            }
+            indexCount = 0
+        }
+        else{
+            response = message.u.username + 
+            ', how can ' + BOTNAME + ' help you with ' +
+            message.msg.substr(BOTNAME.length + 1)
+        }
+        const sentmsg = await rocket.driver.sendToRoom(response, roomname)
+        
+        }
     
-}
+    }
 }
     
 function getChannelMemberList() {
@@ -129,20 +117,10 @@ function getChannelMemberList() {
         })
     })
     .catch(error => {
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        console.log('Error when get channel member list :')
         console.log(error)
-    })
-}
-
-function inviteUserToChannel(username){
-    rocket.api.post('channels.invite', {
-        roomId: channelId,
-        username: username
-    })
-    .then(response => {
-        console.log('invite '+username+' to channel')
-    })
-    .catch(error => {
-        console.log(error)
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     })
 }
 
@@ -175,7 +153,10 @@ setInterval(() => {
                     })  
                 })
                 .catch(error => {
+                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+                    console.log('Error when send DM to ' +user.name)
                     console.log(error)
+                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
                 })
             }
         })
@@ -217,7 +198,10 @@ setInterval(() => {
             submited = []
         })
         .catch(error => {
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+            console.log('Error when sending message to channel :')
             console.log(error)
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         })
 
     }

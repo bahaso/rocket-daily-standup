@@ -25,11 +25,10 @@ npm run debug
 
 ### Compiles for production
 ```
-npm run start
+npm run bot
 ```
 
 
 ### Usefull links
-- [bBot API](https://amazebot.github.io/bbot/index.html)
 - [Rocket.Chat SDK](https://github.com/RocketChat/Rocket.Chat.js.SDK)
 - [Rocket.Chat API](https://rocket.chat/docs/developer-guides/rest-api/)
