@@ -32,7 +32,7 @@ const runbot = async () => {
 
 const processMessages = async(err, message, messageOptions) => {
     
-  if (!err) {
+  if (!err && moment().format('dddd') != 'Saturday' && moment().format('dddd') != 'Sunday') {
     if (message.u._id === myuserid) return
     const roomname = await rocket.driver.getDirectMessageRoomId(message.u.username)
 
@@ -142,7 +142,7 @@ rocket.api.get('channels.list')
 })
 
 setInterval(() => {
-    if(moment().format('HH:mm:ss') == time.dialog) {
+    if(moment().format('HH:mm:ss') == time.dialog && moment().format('dddd') != 'Saturday' && moment().format('dddd') != 'Sunday') {
         users.forEach(user => {
             if (user.username) {
                 rocket.driver.getDirectMessageRoomId(user.username)
@@ -162,7 +162,7 @@ setInterval(() => {
         })
     }
 
-    if(moment().format('HH:mm:ss') == time.publish) {
+    if(moment().format('HH:mm:ss') == time.publish && moment().format('dddd') != 'Saturday' && moment().format('dddd') != 'Sunday') {
         let message1 = ''
         let message2 = ''
         let message3 = ''
