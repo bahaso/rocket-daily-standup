@@ -134,7 +134,7 @@ function findInSubmit(username){
 rocket.api.get('channels.list')
 .then(response => {
     response.channels.forEach(channel => {
-        if (channel.name == 'test'){
+        if (ROOMS.indexOf(channel.name) >= 0){
             channelId = channel._id
         }
     })
