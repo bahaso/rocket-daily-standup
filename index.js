@@ -149,7 +149,7 @@ setInterval(() => {
                 .then(userRoomId => {
                     rocket.driver.sendMessage({
                         rid: userRoomId,
-                        msg: 'Hi, '+user.name+'. What did you do since yesterday? (answer with "yesterday {your answer}")'
+                        msg: 'Hi, '+user.name+'. What did you do since yesterday?'
                     })  
                 })
                 .catch(error => {
